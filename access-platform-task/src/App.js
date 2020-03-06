@@ -1,9 +1,15 @@
 import React from 'react';
+import PageWrapper from 'components/page-wrapper'
+import MainPage from 'pages/main/entry';
 
 class App extends React.Component {
-  render() {
-    return <h1>Hohoh</h1>
-  }
+	render() {
+		return (
+			<PageWrapper>
+				<MainPage />
+			</PageWrapper>
+		)
+	}
 }
 
 export default App;
