@@ -1,18 +1,23 @@
-@import '~media/variables.scss';
+@import '~media/styles/variables.scss';
 
 .panel {
-    width: 500px;
-    height: 500px;
+    width: 600px;
+    max-width: 95vw;
+    height: auto;
     background-color: $bg-panel;
     position: absolute;
-    top: 50%;
+    top: 50px;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, 0);
     border-radius: 5px;
     color: white;
+    padding: 40px;
+    @media (max-width: 425px) {
+        padding: 25px;
+    }
     .tab {
         width: 50%;
-        height: 50px;
+        height: 53px;
         background-color: $bg-disabled;
         cursor: pointer;
         position: relative;
@@ -26,23 +31,38 @@
         &:hover {
             background-color: $green-hover;
         }
+        @media (max-width: 380px) {
+            height: 45px;
+        }
     }
     .tab.active {
         background-color: $green;
     }
+    .tab-pane {
+        display: none;
+        -webkit-animation: fadeOut 1s;
+        animation: fadeOut 1s;
+    }
+    .tab-pane.active {
+        display: block;
+        -webkit-animation: fadeIn 1s;
+        animation: fadeIn 1s;
+    }
 }
 .form__heading {
-    font-size: 22px;
+    font-size: 30px;
     color: $font-light;
-    padding-top: 30px;
+    padding-top: 36px;
     display: block;
     text-align: center;
 }
-#signUp {
-    margin-top: 20px;
+form.auth-form {
+    margin-top: 36px;
+    position: relative;
+    transition: 0.3s all;
     input {
         width: 100%;
-        height: 30px;
+        height: 37px;
         background: transparent;
         border: 1px solid $font-default;
         outline: none;
@@ -50,16 +70,18 @@
         padding: 4px 10px;
         color: $font-light;
         position: relative;
+        transition: 0.2s all;
         &::placeholder {
             color: $font-default;
         }
     }
     label {
         position: absolute;
-        top: 3px;
+        top: 7px;
         left: 11px;
         color: $font-default;
         pointer-events: none;
+        transition: 0.2s all;
     }
     input:focus + label {
         position: absolute;
@@ -75,13 +97,15 @@
         pointer-events: none;
         font-size: 10px;
         display: none;
+        transition: 0.2s all;
     }
     input:focus::placeholder {
-        color: transparent;
+        opacity: 0;
+        transition: 0.2s all;
     }
     div[class*=col] label {
         position: absolute;
-        top: 3px;
+        top: 7px;
         left: 21px;
         color: $font-default;
         pointer-events: none;
@@ -107,9 +131,72 @@
     }
 
     > div {
-        margin-bottom: 25px;
+        margin-bottom: 40px;
         position: relative;
     }
+    input ~ span {
+        position: absolute;
+        width: 35px;
+        height: 37px;
+        right: 0px;
+        padding-top: 12px;
+        color: grey;
+        font-size: 13px;
+        cursor: pointer;
+        text-align: center;
+        &:hover {
+            color: $green-hover;
+        }
+    }
+    .forgot-password {
+        position: absolute;
+        right: 0;
+        bottom: 88px;
+        font-size: 15px;
+        cursor: pointer;
+        color: $green;
+        &:hover {
+            color: $green-hover;
+        }
+    }
+
+    button.btn-signUp {
+        width: 100%;
+        height: 68px;
+        background-color: $green;
+        position: relative;
+        outline: none;
+        border: none;
+        transition: 0.5s all;
+        span {
+            width: max-content;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 32px;
+            color: $font-light;
+            letter-spacing: 5px;
+            font-weight: 500;
+        }
+        &:hover {
+            background-color: $green-hover;
+        }
+        @media (max-width: 499px) {
+            span {
+                font-size: 27px;
+                letter-spacing: 3px;
+            }
+        }
+        @media (max-width: 425px) {
+            height: 55px;
+            span {
+                font-size: 24px;
+                letter-spacing: 1px;
+            }
+        }
+    }
+
 
     // Bootstrap customization
     div[class*=col] {
@@ -140,4 +227,19 @@
 }
 
 
-
+@-webkit-keyframes fadeIn {
+    from { opacity: 0; }
+      to { opacity: 1; }
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+      to { opacity: 1; }
+}
+@-webkit-keyframes fadeOut {
+    from { opacity: 1; }
+      to { opacity: 0; }
+}
+@keyframes fadeOut {
+    from { opacity: 1; }
+      to { opacity: 0; }
+}

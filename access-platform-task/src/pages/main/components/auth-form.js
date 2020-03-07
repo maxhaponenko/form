@@ -9,6 +9,7 @@ class AuthForm extends React.Component {
             signUp: 'signUp',
             login: 'login'
         },
+        hidePassword: true,
         activeTab: 'signUp',
         inputName: '',
         lastName: '',
@@ -26,7 +27,7 @@ class AuthForm extends React.Component {
 
     render() {
         return (
-            <div className="panel p-5">
+            <div className="panel">
                 <div className="panel__header">
                     <div className="row no-gutters">
                         <Tab
@@ -44,7 +45,7 @@ class AuthForm extends React.Component {
                     <TabContent activeTab={this.state.activeTab}>
                         <TabPane tabId={this.state.tabs.signUp}>
                             <div className="form__heading">Sign Up for Free</div>
-                            <form className="auth-form" id="signUp" autoComplete="off">
+                            <form className="auth-form" autoComplete="off">
                                 <div className="row no-gutters">
                                     <div className="col-6">
                                         <input type="text" 
@@ -56,6 +57,7 @@ class AuthForm extends React.Component {
                                             })
                                         }}/>
                                         <label>First Name<span style={{color: '#3BA28A'}}>*</span></label>
+                                        <span style={{right: 10}} className="icon-file-user"></span>
                                     </div>
                                     <div className="col-6">
                                         <input type="text" 
@@ -81,22 +83,58 @@ class AuthForm extends React.Component {
                                     <label>Email Address<span style={{color: '#3BA28A'}}>*</span></label>
                                 </div>
                                 <div>
-                                    <input type="password" value={this.state.password} onChange={(e) => {
+                                    <input type={this.state.hidePassword ? 'password' : 'text'} 
+                                        placeholder="Set A Password*" 
+                                        value={this.state.password} 
+                                        onChange={(e) => {
                                         this.setState({
                                             password: e.target.value
                                         })
                                     }}/>
-                                    {this.state.password.length === 0 ? (
-                                        <label>Set A Password<span style={{color: '#3BA28A'}}>*</span></label>
-                                    ) : null}
-                                    
-                                    
-                                    {/* <input type="password" placeholder="Set A Password*"/> */}
+                                    <label>Set A Password<span style={{color: '#3BA28A'}}>*</span></label>
+                                    {this.state.password.length > 0 && (
+                                        <span className="icon-refresh-locked" onClick={() => this.setState({
+                                            hidePassword: !this.state.hidePassword
+                                        })}></span>
+                                    )}
+                                   
                                 </div>
+                                <button className="btn-signUp"><span>GET STARTED</span></button>
                             </form>
                         </TabPane>
                         <TabPane tabId={this.state.tabs.login}>
                             <div className="form__heading">Welcome Back!</div>
+                            <form className="auth-form" autoComplete="off">
+                                <div>
+                                    <input type="email"
+                                        placeholder="Email Address*"
+                                        value={this.state.email}
+                                        onChange={(e) => {
+                                            this.setState({
+                                                email: e.target.value
+                                            })
+                                        }} />
+                                    <label>Email Address<span style={{ color: '#3BA28A' }}>*</span></label>
+                                </div>
+                                <div style={{marginBottom: 55}}>
+                                    <input type={this.state.hidePassword ? 'password' : 'text'}
+                                        placeholder="Set A Password*"
+                                        value={this.state.password}
+                                        onChange={(e) => {
+                                            this.setState({
+                                                password: e.target.value
+                                            })
+                                        }} />
+                                    <label>Set A Password<span style={{ color: '#3BA28A' }}>*</span></label>
+                                    {this.state.password.length > 0 && (
+                                        <span className="icon-refresh-locked" onClick={() => this.setState({
+                                            hidePassword: !this.state.hidePassword
+                                        })}></span>
+                                    )}
+                                </div>
+                                <span className="forgot-password">Forgot Password?</span>
+                                <button className="btn-signUp"><span>LOG IN</span></button>
+                            </form>
                         </TabPane>
                     </TabContent>
                 </div>
@@ -109,7 +147,6 @@ class AuthForm extends React.Component {
 }
 
 export default AuthForm
-
 
 
 const Tab = ({
