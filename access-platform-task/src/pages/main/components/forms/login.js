@@ -42,6 +42,12 @@ export default class Login extends React.Component {
         })
     }
 
+    handleKeyPress = (event) => {
+        if(event.key === 'Enter'){
+            this.validateForm()
+        }
+    }
+
     validateForm() {
         let validationResult = {}
         for (var inputName in this.state.validationRules) {
@@ -111,7 +117,9 @@ export default class Login extends React.Component {
                             placeholder="Email Address*"
                             value={email}
                             ref={ref => this.email = ref}
-                            onChange={(e) => this.onInputChange('email', e.target.value)} />
+                            onChange={(e) => this.onInputChange('email', e.target.value)}
+                            onKeyPress={this.handleKeyPress}
+                            />
                         <label>Email Address<span style={{ color: '#3BA28A' }}>*</span></label>
                         {showTooltip('email') && (
                             <Tooltip className="form-tooltip">{validationResult.email[0]}</Tooltip>
@@ -123,7 +131,9 @@ export default class Login extends React.Component {
                             placeholder="Set A Password*"
                             value={password}
                             ref={ref => this.password = ref}
-                            onChange={(e) => this.onInputChange('password', e.target.value)} />
+                            onChange={(e) => this.onInputChange('password', e.target.value)}
+                            onKeyPress={this.handleKeyPress}
+                            />
                         <label>Set A Password<span style={{ color: '#3BA28A' }}>*</span></label>
                         {showTooltip('password') && (
                             <Tooltip className="form-tooltip">{validationResult.password[0]}</Tooltip>
