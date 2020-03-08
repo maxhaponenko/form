@@ -61,21 +61,17 @@ export default class SignUp extends React.Component {
     }
 
     onInputChange(name, value) {
-        if(!this.state.didTryToProcess) {
-            this.setState( prevState => ({
-                inputs: {
-                    ...prevState.inputs,
-                    [name]: value
-                }
-            }))
-        } else {
-            this.setState( prevState => ({
-                inputs: {
-                    ...prevState.inputs,
-                    [name]: value
-                }
-            }), this.validateForm())
-        }
+        this.setState( prevState => ({
+            inputs: {
+                ...prevState.inputs,
+                [name]: value
+            }
+        }), () => {
+            if (this.state.didTryToProcess) {
+                this.validateForm()
+            }
+        })
+        
     }
 
     validateForm() {
@@ -98,10 +94,12 @@ export default class SignUp extends React.Component {
             email,
             password
         } = this.state.inputs
+
         const { 
             validationResult,
             didTryToProcess
         } = this.state
+        
         
         const isNotValid = (inputName) => {
             if (
@@ -111,21 +109,48 @@ export default class SignUp extends React.Component {
                 ) return true
             return false
         }
+        const isFirstNotValidInput = (inputName) => {
+            let inputPosition = Object.keys(this.state.validationResult).indexOf(inputName)
+            let previousKey = Object.keys(this.state.validationResult)[inputPosition - 1]
+            let previousRuleValue = this.state.validationResult[previousKey]
+            if (inputPosition === 0 || previousRuleValue === true) {
+                let noInputInFocus = () => {
+                    let rules = Object.keys(this.state.validationRules)
+                    let length = rules.length
+                    let result = []
+                    for (let i = length; i >= 0; i--) {
+                        this[rules[i]] === document.activeElement ? result.push(true) : result.push(false)
+                    }
+                    if (result.some(i => i === true)) return false
+                    return true   
+                }
+                if (this[inputName] && noInputInFocus()) {
+                    this[inputName].focus();
+                }
+                return true
+            } return false
+        }
+
+        const showTooltip = (inputName) => {
+            if (isNotValid(inputName) && isFirstNotValidInput(inputName)) return true
+        }
 
         return (
             <Fragment>
                 <div className="form__heading">Sign Up for Free</div>
-                <form className="auth-form" autoComplete="off">
+                <form className="auth-form">
                     <div className="auth-form__row">
                         <div className={"auth-form__input-container ".concat(isNotValid('firstName') ? "onError" : "")}>
                             <input
                                 type="text"
                                 name="firstName"
+                                autoFocus
                                 placeholder="First Name*"
                                 value={firstName}
+                                ref={ref => this.firstName = ref}
                                 onChange={(e) => this.onInputChange('firstName', e.target.value)} />
                             <label>First Name<span style={{ color: '#3BA28A' }}>*</span></label>
-                            {isNotValid('firstName') && (
+                            {showTooltip('firstName') && (
                                 <Tooltip className="form-tooltip">{validationResult.firstName[0]}</Tooltip>
                             )}
                             <span className="icon-file-user"></span>
@@ -136,9 +161,10 @@ export default class SignUp extends React.Component {
                                 name="lastName"
                                 placeholder="Last Name*"
                                 value={lastName}
+                                ref={ref => this.lastName = ref}
                                 onChange={(e) => this.onInputChange('lastName', e.target.value)} />
                             <label>Last Name<span style={{ color: '#3BA28A' }}>*</span></label>
-                            {isNotValid('lastName') && (
+                            {showTooltip('lastName') && (
                                 <Tooltip className="form-tooltip">{validationResult.lastName[0]}</Tooltip>
                             )}
                         </div>
@@ -149,9 +175,10 @@ export default class SignUp extends React.Component {
                             name="email"
                             placeholder="Email Address*"
                             value={email}
+                            ref={ref => this.email = ref}
                             onChange={(e) => this.onInputChange('email', e.target.value)} />
                         <label>Email Address<span style={{ color: '#3BA28A' }}>*</span></label>
-                        {isNotValid('email') && (
+                        {showTooltip('email') && (
                             <Tooltip className="form-tooltip">{validationResult.email[0]}</Tooltip>
                         )}
                     </div>
@@ -161,10 +188,11 @@ export default class SignUp extends React.Component {
                             name="password"
                             placeholder="Set A Password*"
                             value={password}
+                            ref={ref => this.password = ref}
                             onChange={(e) => this.onInputChange('password', e.target.value)}
                             />
                         <label>Set A Password<span style={{ color: '#3BA28A' }}>*</span></label>
-                        {isNotValid('password') && (
+                        {showTooltip('password') && (
                             <Tooltip className="form-tooltip"><span>{ReactHtmlParser(validationResult.password[0])}</span></Tooltip>
                         )}
                         {password.length > 0 && (
