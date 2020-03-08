@@ -140,6 +140,8 @@ export default class SignUp extends React.Component {
                 <div className="form__heading">Sign Up for Free</div>
                 <form className="auth-form">
                     <div className="auth-form__row">
+                        <input id="email" style={{display: 'none'}} type="email" name="fakeusernameremembered"/>
+                        <input id="password" style={{display: 'none'}} type="password" name="fakepasswordremembered"/>
                         <div className={"auth-form__input-container ".concat(isNotValid('firstName') ? "onError" : "")}>
                             <input
                                 type="text"
@@ -173,6 +175,7 @@ export default class SignUp extends React.Component {
                         <input 
                             type="email"
                             name="email"
+                            autocomplete="new-password"
                             placeholder="Email Address*"
                             value={email}
                             ref={ref => this.email = ref}
@@ -186,6 +189,7 @@ export default class SignUp extends React.Component {
                         <input 
                             type={this.state.hidePassword ? 'password' : 'text'}
                             name="password"
+                            autoComplete="new-password"
                             placeholder="Set A Password*"
                             value={password}
                             ref={ref => this.password = ref}
@@ -200,7 +204,6 @@ export default class SignUp extends React.Component {
                                 hidePassword: !this.state.hidePassword
                             })}></span>
                         )}
-
                     </div>
                     <div className="btn-signUp" onClick={this.validateForm.bind(this)}><span>GET STARTED</span></div>
                 </form>
