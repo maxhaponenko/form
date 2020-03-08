@@ -59,7 +59,6 @@ export default class SignUp extends React.Component {
         },
         validationResult: {},
     }
-    
 
     onInputChange(name, value) {
         if(!this.state.didTryToProcess) {
@@ -91,10 +90,6 @@ export default class SignUp extends React.Component {
         })
     }
 
-    componentDidMount() {
-        // this.validateForm()
-    }
-
     render() {
 
         const {
@@ -117,7 +112,6 @@ export default class SignUp extends React.Component {
             return false
         }
 
-
         return (
             <Fragment>
                 <div className="form__heading">Sign Up for Free</div>
@@ -134,7 +128,6 @@ export default class SignUp extends React.Component {
                             {isNotValid('firstName') && (
                                 <Tooltip className="form-tooltip">{validationResult.firstName[0]}</Tooltip>
                             )}
-                            
                             <span className="icon-file-user"></span>
                         </div>
                         <div className={"auth-form__input-container ".concat(isNotValid('lastName') ? "onError" : "")}>
@@ -145,12 +138,9 @@ export default class SignUp extends React.Component {
                                 value={lastName}
                                 onChange={(e) => this.onInputChange('lastName', e.target.value)} />
                             <label>Last Name<span style={{ color: '#3BA28A' }}>*</span></label>
-
                             {isNotValid('lastName') && (
                                 <Tooltip className="form-tooltip">{validationResult.lastName[0]}</Tooltip>
                             )}
-
-                            
                         </div>
                     </div>
                     <div className={"auth-form__input-container ".concat(isNotValid('email') ? "onError" : "")}>
@@ -174,11 +164,9 @@ export default class SignUp extends React.Component {
                             onChange={(e) => this.onInputChange('password', e.target.value)}
                             />
                         <label>Set A Password<span style={{ color: '#3BA28A' }}>*</span></label>
-                        
                         {isNotValid('password') && (
                             <Tooltip className="form-tooltip"><span>{ReactHtmlParser(validationResult.password[0])}</span></Tooltip>
                         )}
-                        
                         {password.length > 0 && (
                             <span className="icon-refresh-locked" onClick={() => this.setState({
                                 hidePassword: !this.state.hidePassword
