@@ -97,7 +97,6 @@ form.auth-form {
             color: $font-default;
         }
     }
-    
     label {
         position: absolute;
         top: 7px;
@@ -126,33 +125,6 @@ form.auth-form {
         opacity: 0;
         transition: 0.2s all;
     }
-    div[class*=col] label {
-        position: absolute;
-        top: 7px;
-        left: 21px;
-        color: $font-default;
-        pointer-events: none;
-    }
-    div[class*=col] input:focus + label {
-        position: absolute;
-        top: -16px;
-        left: 15px;
-        pointer-events: none;
-        font-size: 10px;
-    }
-
-    div[class*=col] input:not(:placeholder-shown) + label {
-        position: absolute;
-        top: -16px;
-        left: 15px;
-        pointer-events: none;
-        font-size: 10px;
-        display: none;
-    }
-    div[class*=col] input:focus::placeholder {
-        color: transparent;
-    }
-
     > div {
         margin-bottom: 40px;
         position: relative;
@@ -171,16 +143,13 @@ form.auth-form {
             color: $green-hover;
         }
     }
-
     .onError {
         &:before {
             content: '';
             display: block;
             border: 1px solid red;
         }
-        
     }
-
     .forgot-password {
         position: absolute;
         right: 0;
@@ -191,8 +160,10 @@ form.auth-form {
         &:hover {
             color: $green-hover;
         }
+        @media (max-width: 425px) {
+            bottom: 75px;
+        }
     }
-
     .btn-signUp {
         width: 100%;
         height: 68px;
@@ -231,20 +202,9 @@ form.auth-form {
             }
         }
     }
-
     .form-tooltip {
         margin-top: 11px;
         margin-left: -16px;
-    }
-
-    // Bootstrap customization
-    div[class*=col] {
-        padding-right: 10px;
-        padding-left: 10px;
-    }
-    .row {
-        margin-right: -10px;
-        margin-left: -10px;
     }
     /* Change Autocomplete styles in Chrome*/
     input:-webkit-autofill,
@@ -260,11 +220,9 @@ form.auth-form {
     border: 1px solid $font-default;
     -webkit-text-fill-color: $font-light;
     background-color: $bg-panel !important;
-    //   -webkit-box-shadow: 0 0 0px 1000px #000 inset;
     transition: background-color 1000s ease-in-out 0s;
     }
 }
-
 
 @-webkit-keyframes fadeIn {
     from { opacity: 0; }
